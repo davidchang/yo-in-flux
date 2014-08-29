@@ -14,16 +14,13 @@ var ReactTransitionGroup = React.addons.TransitionGroup;
 require('../../styles/reset.css');
 require('../../styles/main.css');
 
-var imageURL = '../../images/yeoman.png';
+var IndexRoute = require('../../scripts/components/IndexRoute.jsx');
+var DemoAuthenticatedRoute = require('../../scripts/components/DemoAuthenticatedRoute.jsx');
 
 var YoInReactFluxApp = React.createClass({
   render: function() {
     return (
-      <div className='main'>
-        <ReactTransitionGroup transitionName="fade">
-          <img src={imageURL} />
-        </ReactTransitionGroup>
-      </div>
+      <IndexRoute />
     );
   }
 });
