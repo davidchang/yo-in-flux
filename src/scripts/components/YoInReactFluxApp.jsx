@@ -14,13 +14,13 @@ var ReactTransitionGroup = React.addons.TransitionGroup;
 require('../../styles/reset.css');
 require('../../styles/main.css');
 
-var IndexRoute = require('../../scripts/components/IndexRoute.jsx');
-var DemoAuthenticatedRoute = require('../../scripts/components/DemoAuthenticatedRoute.jsx');
+var DemoUserRoute = require('../../scripts/components/DemoUserRoute.jsx');
+var AuthRequiredRoute = require('../../scripts/components/AuthRequiredRoute.jsx');
 
 var YoInReactFluxApp = React.createClass({
   render: function() {
     return (
-      <IndexRoute />
+      <DemoUserRoute />
     );
   }
 });
