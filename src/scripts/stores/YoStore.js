@@ -41,6 +41,7 @@ var sendYo = function(personToYo) {
   });
 };
 
+var authenticatedUser = '';
 var yoList = [];
 var notifications = [];
 
@@ -48,7 +49,7 @@ var notifications = [];
 var YoStore = merge(EventEmitter.prototype, {
 
   getName: function() {
-
+    return authenticatedUser;
   },
 
   getPeopleToYo: function() {
@@ -60,6 +61,7 @@ var YoStore = merge(EventEmitter.prototype, {
   },
 
   emitChange: function() {
+    console.log('emitChange called');
     this.emit(CHANGE_EVENT);
   },
 
@@ -80,22 +82,33 @@ var YoStore = merge(EventEmitter.prototype, {
 
 var emit = _.debounce(YoStore.emitChange.bind(YoStore), 300, {
   leading : true,
-  trailing : false
+  trailing : true
 });
 
 
-var firebaseRef = new Firebase(baseUrl + '/users/special-user-for-demo');
+var authenticatedUserRef;
 
-// only listening on child_added is actually totally sufficient because these entities are only ever added
-firebaseRef.child('notifications').on('child_added', function(dataSnapshot) {
-  notifications.push(dataSnapshot.val());
-  emit();
-});
+var initializeUser = function(person) {
+  authenticatedUser = person;
+  notifications = [];
+  yoList = [];
 
-firebaseRef.child('yoList').on('child_added', function(dataSnapshot) {
-  yoList.push(dataSnapshot.val());
-  emit();
-});
+  authenticatedUserRef = new Firebase(baseUrl + '/users/' + authenticatedUser);
+
+  // not actually using this in the app, but might as well keep it updated
+  authenticatedUserRef.child('name').set(authenticatedUser);
+
+  // only listening on child_added is actually totally sufficient because these entities are only ever added
+  authenticatedUserRef.child('notifications').on('child_added', function(dataSnapshot) {
+    notifications.push(dataSnapshot.val());
+    emit();
+  });
+
+  authenticatedUserRef.child('yoList').on('child_added', function(dataSnapshot) {
+    yoList.push(dataSnapshot.val());
+    emit();
+  });
+};
 
 
 // Register to handle all updates
@@ -109,6 +122,12 @@ AppDispatcher.register(function(payload) {
       break;
 
     case YoConstants.YO_USER_AUTHENTICATED:
+      initializeUser(action.person);
+      break;
+
+    case YoConstants.YO_USER_UNAUTHENTICATED:
+      authenticatedUser = '';
+      authenticatedUserRef = '';
       break;
 
     default:

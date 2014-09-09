@@ -40,6 +40,12 @@ var YoActions = {
       actionType: YoConstants.YO_USER_AUTHENTICATED,
       person: person
     });
+  },
+
+  userUnauthenticated: function() {
+    AppDispatcher.handleViewAction({
+      actionType: YoConstants.YO_USER_UNAUTHENTICATED
+    });
   }
 
 };

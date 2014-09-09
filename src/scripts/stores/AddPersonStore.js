@@ -53,6 +53,8 @@ var AddPersonStore = merge(EventEmitter.prototype, {
   }
 });
 
+var authenticatedUser;
+
 var addPerson = function(personToAdd) {
   var $this = this;
   var newPersonRef = new Firebase(baseUrl + '/users/' + personToAdd);
@@ -64,7 +66,7 @@ var addPerson = function(personToAdd) {
     }
 
     // TODO fix this. need to listen to YO_USER_AUTHENTICATED to get name
-    var ref = new Firebase(baseUrl + '/users/special-user-for-demo/yoList');
+    var ref = new Firebase(baseUrl + '/users/' + authenticatedUser + '/yoList');
     ref.push({ name : personToAdd });
 
     showError = false;
@@ -87,6 +89,14 @@ AppDispatcher.register(function(payload) {
       newPersonsName = action.name;
       showError = false;
       AddPersonStore.emitChange();
+      break;
+
+    case YoConstants.YO_USER_AUTHENTICATED:
+      authenticatedUser = action.person;
+      break;
+
+    case YoConstants.YO_USER_UNAUTHENTICATED:
+      authenticatedUser = '';
       break;
 
     default:

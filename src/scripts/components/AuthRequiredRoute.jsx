@@ -7,21 +7,23 @@
 var React = require('react/addons');
 require('../../styles/DemoAuthenticatedRoute.css');
 var Firebase = require('firebase/lib/firebase-web');
-var ReactFireMixin = require('reactfire/dist/reactfire');
 var FirebaseSimpleLogin = require('firebase-simple-login/firebase-simple-login');
+
+console.log('FirebaseSimpleLogin', FirebaseSimpleLogin);
+console.log('FirebaseSimpleLogin.prototype', FirebaseSimpleLogin.prototype);
 
 var UserDisplay = require('../../scripts/components/UserDisplay.jsx');
 var PeopleToYo = require('../../scripts/components/PeopleToYo.jsx');
 var YoDisplay = require('../../scripts/components/YoDisplay.jsx');
+var AddPerson = require('../../scripts/components/AddPerson.jsx');
 
-var DemoAuthenticatedRoute = React.createClass({
-  mixins : [ReactFireMixin],
+var AuthRequiredRoute = React.createClass({
   componentWillMount : function() {
     var baseUrl = 'https://yo-in-react.firebaseio.com';
 
     var $this = this;
 
-    $this.authRef = new FirebaseSimpleLogin(new Firebase(baseUrl), function(error, user) {
+    this.authRef = new FirebaseSimpleLogin(new Firebase(baseUrl), function(error, user) {
       $this.setState({
         errorMsg : ''
       });
@@ -32,31 +34,27 @@ var DemoAuthenticatedRoute = React.createClass({
           errorMsg : error.message,
           authenticated : false
         });
+
+        YoActions.userUnauthenticated();
       } else if (user) {
         // user authenticated with Firebase
-
         $this.setState({
-          name : user.username,
           authenticated : true
         });
 
-        var newRef = new Firebase(baseUrl + '/users/' + user.username);
-
-        $this.bindAsObject(newRef, 'user');
-        newRef.child('name').set(user.username);
-
+        YoActions.userAuthenticated(user.username);
       } else {
         // user is logged out
         $this.setState({
           authenticated : false
         });
+
+        YoActions.userUnauthenticated();
       }
     });
   },
   getInitialState : function() {
     return {
-      name : '',
-      user : {},
       errorMsg : '',
       authenticated : false
     };
@@ -75,9 +73,10 @@ var DemoAuthenticatedRoute = React.createClass({
       return (
         <div>
           <a className="margin-bottom btn btn-default btn-large" href="#" onClick={this._logout}>Logout</a>
-          <UserDisplay user={this.state.user} />
-          <PeopleToYo name={this.state.name} />
-          <YoDisplay user={this.state.user} name={this.state.name} />
+          <UserDisplay />
+          <PeopleToYo />
+          <AddPerson />
+          <YoDisplay />
           <h5>Made by <a href="https://twitter.com/davidchizzle">@davidchizzle</a> from <a href="http://davidandsuzi.com">davidandsuzi.com</a></h5>
         </div>
       );
@@ -100,4 +99,4 @@ var DemoAuthenticatedRoute = React.createClass({
   }
 });
 
-module.exports = DemoAuthenticatedRoute;
+module.exports = AuthRequiredRoute;
