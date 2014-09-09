@@ -63,9 +63,9 @@ var addPerson = function(personToAdd) {
       return;
     }
 
-    $this.firebaseRefs['yoList'].push({
-      name: $this.state.newPerson.trim()
-    });
+    // TODO fix this. need to listen to YO_USER_AUTHENTICATED to get name
+    var ref = new Firebase(baseUrl + '/users/special-user-for-demo/yoList');
+    ref.push({ name : personToAdd });
 
     showError = false;
     newPersonsName = '';

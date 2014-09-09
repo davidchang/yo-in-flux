@@ -14,6 +14,8 @@ var EventEmitter = require('events').EventEmitter;
 var YoConstants = require('../constants/YoConstants');
 var merge = require('react/lib/merge');
 
+var _ = require('lodash/lodash');
+
 var Firebase = require('firebase/lib/firebase-web');
 
 var CHANGE_EVENT = 'change';
@@ -30,9 +32,10 @@ var sendYo = function(personToYo) {
       return;
     }
 
+    // not actually using this in the app, but might as well keep it updated
     yoRecipient.child('yoCount').set((data.val().yoCount + 1) || 1);
     yoRecipient.child('notifications').push({
-      from : $this.props.name,
+      from : personToYo,
       timestamp : new Date().getTime()
     });
   });
@@ -42,34 +45,17 @@ var yoList = [];
 var notifications = [];
 
 
-var firebaseRef = new Firebase(baseUrl + '/users/special-user-for-demo');
-
-firebaseRef.child('notifications').on('child_added', function(dataSnapshot) {
-  notifications.push(dataSnapshot.val());
-  YoStore.emitChange();
-});
-
-firebaseRef.child('yoList').on('child_added', function(dataSnapshot) {
-  yoList.push(dataSnapshot.val());
-  YoStore.emitChange();
-});
-
-
 var YoStore = merge(EventEmitter.prototype, {
 
   getName: function() {
 
   },
 
-  getYoCount: function() {
-    return notifications.length;
-  },
-
   getPeopleToYo: function() {
     return yoList;
   },
 
-  getYoNotifications: function() {
+  getNotifications: function() {
     return notifications;
   },
 
@@ -91,6 +77,26 @@ var YoStore = merge(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   }
 });
+
+var emit = _.debounce(YoStore.emitChange.bind(YoStore), 300, {
+  leading : true,
+  trailing : false
+});
+
+
+var firebaseRef = new Firebase(baseUrl + '/users/special-user-for-demo');
+
+// only listening on child_added is actually totally sufficient because these entities are only ever added
+firebaseRef.child('notifications').on('child_added', function(dataSnapshot) {
+  notifications.push(dataSnapshot.val());
+  emit();
+});
+
+firebaseRef.child('yoList').on('child_added', function(dataSnapshot) {
+  yoList.push(dataSnapshot.val());
+  emit();
+});
+
 
 // Register to handle all updates
 AppDispatcher.register(function(payload) {

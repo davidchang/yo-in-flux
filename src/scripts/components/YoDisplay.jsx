@@ -6,15 +6,20 @@
 
 var React = require('react/addons');
 require('../../styles/YoDisplay.css');
-var Firebase = require('firebase/lib/firebase-web');
-var ReactFireMixin = require('reactfire/dist/reactfire');
+var YoStore = require('../stores/YoStore');
 
-var baseUrl = 'https://yo-in-react.firebaseio.com';
+var getState = function() {
+  return {
+    notifications: YoStore.getNotifications()
+  };
+};
 
 var YoDisplay = React.createClass({
-  mixins : [ReactFireMixin],
-  componentWillMount : function() {
-    this.bindAsArray(new Firebase(baseUrl + '/users/' + this.props.name + '/notifications'), 'notifications');
+  componentDidMount: function() {
+    YoStore.addChangeListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    YoStore.removeChangeListener(this._onChange);
   },
   getInitialState : function() {
     return {
@@ -41,13 +46,16 @@ var YoDisplay = React.createClass({
         <div className="panel panel-default">
           <div className="panel-heading">Yo Count</div>
           <div className="panel-body">
-            {this.props.user.yoCount || 0}
+            {this.state.notifications.length || 0}
           </div>
         </div>
 
         {notifications}
       </section>
     );
+  },
+  _onChange: function() {
+    this.setState(getState());
   }
 });
 

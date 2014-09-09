@@ -41,7 +41,7 @@ var PeopleToYo = React.createClass({
         <div className="panel-heading">Users To Yo</div>
         <div className="panel-body">
           <ul className="list-unstyled">{this.state.yoList.map(function(person) {
-            return <li>{person} <button className="btn btn-primary" onClick={this._sendYo.bind(this, person)}>Yo</button></li>;
+            return <li>{person.name} <button className="btn btn-primary" onClick={this._sendYo.bind(this, person.name)}>Yo</button></li>;
           }, this)}</ul>
         </div>
       </div>
