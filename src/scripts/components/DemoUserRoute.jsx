@@ -12,6 +12,7 @@ var ReactFireMixin = require('reactfire/dist/reactfire');
 var UserDisplay = require('../../scripts/components/UserDisplay.jsx');
 var PeopleToYo = require('../../scripts/components/PeopleToYo.jsx');
 var YoDisplay = require('../../scripts/components/YoDisplay.jsx');
+var AddPerson = require('../../scripts/components/AddPerson.jsx');
 
 var IndexRoute = React.createClass({
   mixins : [ReactFireMixin],
@@ -34,6 +35,7 @@ var IndexRoute = React.createClass({
         <div className="margin-bottom">This is a demo page signed in with the username "special-user-for-demo"<br/>You can actually sign in via Twitter <a href="authenticated.html">here</a>.</div>
         <UserDisplay user={this.state.user} />
         <PeopleToYo name={this.state.name} />
+        <AddPerson />
         <YoDisplay user={this.state.user} name={this.state.name} />
         <h5>Made by <a href="https://twitter.com/davidchizzle">@davidchizzle</a> from <a href="http://davidandsuzi.com">davidandsuzi.com</a></h5>
       </div>
