@@ -61,7 +61,6 @@ var YoStore = merge(EventEmitter.prototype, {
   },
 
   emitChange: function() {
-    console.log('emitChange called');
     this.emit(CHANGE_EVENT);
   },
 

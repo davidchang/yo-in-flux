@@ -7,10 +7,8 @@
 var React = require('react/addons');
 require('../../styles/DemoAuthenticatedRoute.css');
 var Firebase = require('firebase/lib/firebase-web');
-var FirebaseSimpleLogin = require('firebase-simple-login/firebase-simple-login');
 
-console.log('FirebaseSimpleLogin', FirebaseSimpleLogin);
-console.log('FirebaseSimpleLogin.prototype', FirebaseSimpleLogin.prototype);
+var YoActions = require('../actions/YoActions');
 
 var UserDisplay = require('../../scripts/components/UserDisplay.jsx');
 var PeopleToYo = require('../../scripts/components/PeopleToYo.jsx');

@@ -20,7 +20,8 @@ var AuthRequiredRoute = require('../../scripts/components/AuthRequiredRoute.jsx'
 var YoInReactFluxApp = React.createClass({
   render: function() {
     return (
-      <DemoUserRoute />
+      // <DemoUserRoute />
+      <AuthRequiredRoute />
     );
   }
 });
