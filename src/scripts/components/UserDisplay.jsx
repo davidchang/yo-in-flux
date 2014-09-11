@@ -24,7 +24,7 @@ var UserDisplay = React.createClass({
   },
   getInitialState : function() {
     return {
-      name : ''
+      name : YoStore.getName()
     };
   },
   render : function() {

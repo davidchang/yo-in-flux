@@ -25,7 +25,7 @@ var PeopleToYo = React.createClass({
   },
   getInitialState : function() {
     return {
-      yoList : []
+      yoList: YoStore.getPeopleToYo()
     };
   },
   _sendYo : function(personToYo) {

@@ -20,7 +20,7 @@ var Firebase = require('firebase/lib/firebase-web');
 
 var CHANGE_EVENT = 'change';
 
-var baseUrl = 'https://yo-in-react.firebaseio.com';
+var baseUrl = 'https://yo-in-flux.firebaseio.com';
 
 
 var sendYo = function(personToYo) {
@@ -107,6 +107,9 @@ var initializeUser = function(person) {
     yoList.push(dataSnapshot.val());
     emit();
   });
+
+  // on the case that no notifications, and no yoList..
+  emit();
 };
 
 

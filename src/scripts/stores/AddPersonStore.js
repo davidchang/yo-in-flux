@@ -18,7 +18,7 @@ var Firebase = require('firebase/lib/firebase-web');
 
 var CHANGE_EVENT = 'change';
 
-var baseUrl = 'https://yo-in-react.firebaseio.com';
+var baseUrl = 'https://yo-in-flux.firebaseio.com';
 
 var showError = false,
   newPersonsName = '';

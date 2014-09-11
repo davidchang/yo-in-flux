@@ -1,0 +1,9 @@
+{
+  "firebase": "yo-in-flux",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
