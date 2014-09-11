@@ -7,11 +7,13 @@
   "mainInput": "YoInReactFluxApp",
   "mainOutput": "main",
   "dependencies": {
-    "react": "~0.10.0",
+    "react": "~0.11.0",
     "reactfire": "^0.1.6",
     "firebase": "^1.0.21",
     "flux": "^2.0.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "react-async": "^1.0.1",
+    "react-router-component": "^0.20.1"
   },
   "devDependencies": {
     "grunt": "~0.4.4",

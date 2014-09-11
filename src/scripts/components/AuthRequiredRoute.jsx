@@ -88,7 +88,7 @@ var AuthRequiredRoute = React.createClass({
     return (
       <div>
         <h3>My Web Version of Yo using React and Firebase</h3>
-        <div className="margin-bottom">If you do not want to log in, you can still view the experience at <a href="index.html">here</a>.</div>
+        <div className="margin-bottom">If you do not want to log in, you can still view the experience at <a href="/index.html">here</a>.</div>
         {errorMsg}
         <a className="margin-bottom btn btn-primary" href="#" onClick={this._login}>Login</a>
         <h5>Made by <a href="https://twitter.com/davidchizzle">@davidchizzle</a> from <a href="http://davidandsuzi.com">davidandsuzi.com</a></h5>

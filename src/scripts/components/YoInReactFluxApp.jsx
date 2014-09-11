@@ -7,6 +7,11 @@
 var React = require('react/addons');
 var ReactTransitionGroup = React.addons.TransitionGroup;
 
+var Router = require('react-router-component');
+var Locations = Router.Locations;
+var Location = Router.Location;
+var NotFound = Router.NotFound;
+
 // Export React so the devtools can find it
 (window !== window.top ? window.top : window).React = React;
 
@@ -20,8 +25,13 @@ var AuthRequiredRoute = require('../../scripts/components/AuthRequiredRoute.jsx'
 var YoInReactFluxApp = React.createClass({
   render: function() {
     return (
-      // <DemoUserRoute />
-      <AuthRequiredRoute />
+      <section>
+        <Locations>
+          <Location path="/index.html" handler={DemoUserRoute} />
+          <Location path="/authRequired.html" handler={AuthRequiredRoute} />
+          <NotFound handler={DemoUserRoute} />
+        </Locations>
+      </section>
     );
   }
 });
