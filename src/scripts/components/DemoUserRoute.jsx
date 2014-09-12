@@ -5,14 +5,9 @@
 'use strict';
 
 var React = require('react/addons');
-require('../../styles/IndexRoute.css');
-
 var YoActions = require('../actions/YoActions');
 
-var UserDisplay = require('../../scripts/components/UserDisplay.jsx');
-var PeopleToYo = require('../../scripts/components/PeopleToYo.jsx');
-var YoDisplay = require('../../scripts/components/YoDisplay.jsx');
-var AddPerson = require('../../scripts/components/AddPerson.jsx');
+var MainInterface = require('../../scripts/components/MainInterface.jsx');
 
 var DemoUserRoute = React.createClass({
   componentWillMount : function() {
@@ -28,11 +23,7 @@ var DemoUserRoute = React.createClass({
           <br/>
           You can actually sign in via Twitter <a href="/authRequired.html">here</a>.
         </div>
-        <UserDisplay />
-        <PeopleToYo />
-        <AddPerson />
-        <YoDisplay />
-        <h5>Made by <a href="https://twitter.com/davidchizzle">@davidchizzle</a> from <a href="http://davidandsuzi.com">davidandsuzi.com</a></h5>
+        <MainInterface />
       </div>
     );
   }

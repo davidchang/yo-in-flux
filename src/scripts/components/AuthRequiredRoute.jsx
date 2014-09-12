@@ -5,23 +5,17 @@
 'use strict';
 
 var React = require('react/addons');
-require('../../styles/DemoAuthenticatedRoute.css');
-var Firebase = require('firebase/lib/firebase-web');
-
 var YoActions = require('../actions/YoActions');
 
-var UserDisplay = require('../../scripts/components/UserDisplay.jsx');
-var PeopleToYo = require('../../scripts/components/PeopleToYo.jsx');
-var YoDisplay = require('../../scripts/components/YoDisplay.jsx');
-var AddPerson = require('../../scripts/components/AddPerson.jsx');
+var MainInterface = require('../../scripts/components/MainInterface.jsx');
+
+var firebaseConnection = require('../firebaseConnection');
 
 var AuthRequiredRoute = React.createClass({
   componentWillMount : function() {
-    var baseUrl = 'https://yo-in-react.firebaseio.com';
-
     var $this = this;
 
-    this.authRef = new FirebaseSimpleLogin(new Firebase(baseUrl), function(error, user) {
+    this.authRef = new FirebaseSimpleLogin(firebaseConnection, function(error, user) {
       $this.setState({
         errorMsg : ''
       });
@@ -71,11 +65,7 @@ var AuthRequiredRoute = React.createClass({
       return (
         <div>
           <a className="margin-bottom btn btn-default btn-large" href="#" onClick={this._logout}>Logout</a>
-          <UserDisplay />
-          <PeopleToYo />
-          <AddPerson />
-          <YoDisplay />
-          <h5>Made by <a href="https://twitter.com/davidchizzle">@davidchizzle</a> from <a href="http://davidandsuzi.com">davidandsuzi.com</a></h5>
+          <MainInterface />
         </div>
       );
     }
@@ -91,7 +81,7 @@ var AuthRequiredRoute = React.createClass({
         <div className="margin-bottom">If you do not want to log in, you can still view the experience at <a href="/index.html">here</a>.</div>
         {errorMsg}
         <a className="margin-bottom btn btn-primary" href="#" onClick={this._login}>Login</a>
-        <h5>Made by <a href="https://twitter.com/davidchizzle">@davidchizzle</a> from <a href="http://davidandsuzi.com">davidandsuzi.com</a></h5>
+        <MainInterface unauthenticated="true" />
       </div>
     );
   }

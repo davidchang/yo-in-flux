@@ -16,16 +16,13 @@ var merge = require('react/lib/merge');
 
 var _ = require('lodash/lodash');
 
-var Firebase = require('firebase/lib/firebase-web');
-
+var firebaseConnection = require('../firebaseConnection');
 var CHANGE_EVENT = 'change';
-
-var baseUrl = 'https://yo-in-flux.firebaseio.com';
 
 
 var sendYo = function(personToYo) {
   var $this = this;
-  var yoRecipient = new Firebase(baseUrl + '/users/' + personToYo);
+  var yoRecipient = firebaseConnection.child('/users/' + personToYo);
 
   yoRecipient.once('value', function(data) {
     if (!data.val()) {
@@ -92,7 +89,7 @@ var initializeUser = function(person) {
   notifications = [];
   yoList = [];
 
-  authenticatedUserRef = new Firebase(baseUrl + '/users/' + authenticatedUser);
+  authenticatedUserRef = firebaseConnection.child('/users/' + authenticatedUser);
 
   // not actually using this in the app, but might as well keep it updated
   authenticatedUserRef.child('name').set(authenticatedUser);

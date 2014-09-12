@@ -5,7 +5,6 @@
 'use strict';
 
 var React = require('react/addons');
-require('../../styles/PeopleToYo.css');
 
 var YoActions = require('../actions/YoActions');
 var AddPersonStore = require('../stores/AddPersonStore');

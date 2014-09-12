@@ -14,11 +14,8 @@ var EventEmitter = require('events').EventEmitter;
 var YoConstants = require('../constants/YoConstants');
 var merge = require('react/lib/merge');
 
-var Firebase = require('firebase/lib/firebase-web');
-
+var firebaseConnection = require('../firebaseConnection');
 var CHANGE_EVENT = 'change';
-
-var baseUrl = 'https://yo-in-flux.firebaseio.com';
 
 var showError = false,
   newPersonsName = '';
@@ -57,7 +54,7 @@ var authenticatedUser;
 
 var addPerson = function(personToAdd) {
   var $this = this;
-  var newPersonRef = new Firebase(baseUrl + '/users/' + personToAdd);
+  var newPersonRef = firebaseConnection.child('/users/' + personToAdd);
   newPersonRef.once('value', function(data) {
     if (!data.val()) {
       showError = true;
@@ -66,7 +63,7 @@ var addPerson = function(personToAdd) {
     }
 
     // TODO fix this. need to listen to YO_USER_AUTHENTICATED to get name
-    var ref = new Firebase(baseUrl + '/users/' + authenticatedUser + '/yoList');
+    var ref = firebaseConnection.child('/users/' + authenticatedUser + '/yoList');
     ref.push({ name : personToAdd });
 
     showError = false;

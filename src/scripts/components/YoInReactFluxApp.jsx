@@ -17,6 +17,7 @@ var NotFound = Router.NotFound;
 
 // CSS
 require('../../styles/reset.css');
+require('../../styles/bootstrap.css');
 require('../../styles/main.css');
 
 var DemoUserRoute = require('../../scripts/components/DemoUserRoute.jsx');

@@ -5,7 +5,6 @@
 'use strict';
 
 var React = require('react/addons');
-require('../../styles/UserDisplay.css');
 
 var YoStore = require('../stores/YoStore');
 
